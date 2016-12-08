@@ -26,10 +26,10 @@ def after_request(response):
 def show_music_all():
     music_lists = []
     # 曲の一覧を取得
-    rows = g.db.execute("select music.music, artist.artist, feeling.feeling \
-                         from ns_music music, ns_artist artist, ns_feeling feeling \
-                         where music.artist=artist.id and music.feeling=feeling.id \
-                         order by artist.artist;")
+    rows = g.db.execute("select mu.music, ar.artist, fe.feeling \
+                         from ns_music mu, ns_artist ar, ns_feeling fe \
+                         where mu.artist=ar.id and mu.feeling=fe.id \
+                         order by ar.artist;")
     for row in rows.fetchall():
         music_lists.append({"music": row["music"],
                            "artist": row["artist"],
@@ -96,7 +96,8 @@ def regist_artist():
 
         # 登録処理を行う
         else:
-            sql = text("insert into ns_artist (artist, country) values (:artist, :country);")
+            sql = text("insert into ns_artist (artist, country) \
+                        values (:artist, :country);")
             g.db.execute(sql,
                          artist = request.form["new_artist"],
                          country = request.form["new_country"])
@@ -106,6 +107,16 @@ def regist_artist():
     # 直リンクの場合はリダイレクト
     else:
         return redirect(url_for("regist"))
+
+
+@app.route("/")
+def random_music():
+    row = g.db.execute("select mu.music, ar.artist \
+                         from ns_music mu, ns_artist ar \
+                         where mu.artist = ar.id \
+                         order by random() limit 1;")
+    return render_template("random_music.html", row=row.fetchone())
+
 
 if __name__ == "__main__":
     app.run()
