@@ -119,7 +119,7 @@ def regist_artist():
             return redirect(url_for("regist"))
 
         # パスワードが間違っていた場合はリダイレクト
-        elif request.form["regist_pass"] == app.config["PASSWORD"]:
+        elif request.form["regist_pass"] != app.config["PASSWORD"]:
             flash("パスワードが間違えています")
             return redirect(url_for("regist"))
 
