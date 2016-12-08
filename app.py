@@ -110,7 +110,7 @@ def regist_music():
 
 @app.route("/regist/artist", methods=["GET", "POST"])
 def regist_artist():
-    if request.method != "POST":
+    if request.method == "POST":
         # 未記入がある場合はリダイレクト
         if not request.form["new_artist"] or \
            not request.form["new_country"] or \
