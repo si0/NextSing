@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="utf-8">
-    <title>NextSing</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}NextSing - 曲の一覧{% endblock %}
+
+{% block content %}
 
 <h1>曲の一覧</h1>
 {% for row in lists %}
-    {{ row.music }} | {{ row.artist }} | {{ row.feeling }}
+    <p>{{ row.music }} | {{ row.artist }} | {{ row.feeling }}</p>
 
 {% endfor %}
 
-</body>
-</html>
-
+{% endblock %}
