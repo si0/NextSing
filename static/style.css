@@ -1,0 +1,50 @@
+body {
+    width : 55%;
+    margin : 0 auto;
+    background : #B23333;
+}
+
+#main {
+    padding : 10px 20px 200px 20px;
+    margin-top : 30px;
+    background : #FAF7FF;
+    border : 3px solid #CE5858;
+}
+
+#main_content {
+    margin-bottom : 100px;
+}
+
+#random_music_button {
+    border : 3px solid #CE5858;
+    background : #FAF7FF;
+    padding : 10px 70px;
+    margin-top : 10px;
+    font-size : 14px;
+}
+
+#link_to {
+    border : 3px solid #CE5858;
+    background : #FAF7FF;
+    padding : 10px 30px;
+    margin-top : 10px;
+    font-size : 14px;
+}
+
+.info_music {
+    font-size : 18px;
+}
+
+.info_artist {
+    float : right;
+    font-size : 12px;
+    margin-right : 20px;
+    text-align : right;
+}
+
+#info_feeling {
+    border-top : 1px solid #ccc;
+    margin-bottom : 10px;
+    margin-right : 20px;
+    text-align : right;
+}

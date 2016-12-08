@@ -1,7 +1,7 @@
 -- 曲を格納するテーブル
 create table ns_music (
     id serial primary key,
-    music varchar(255) not null,
+    music varchar(255) not null unique,
     artist integer not null,
     feeling integer not null,
     created timestamp not null default 'now'
@@ -11,7 +11,7 @@ create table ns_music (
 -- アーティストを格納するテーブル
 create table ns_artist (
     id serial primary key,
-    artist varchar(255) not null,
+    artist varchar(255) not null unique,
     country integer not null,
     created timestamp not null default 'now'
 );

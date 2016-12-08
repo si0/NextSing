@@ -3,52 +3,65 @@
 {% block title %}NextSing - 曲の登録{% endblock %}
 
 {% block content %}
-
-{% for message in get_flashed_messages() %}
-<div style="border: 1px solid #ccc;">
-    {{ message }}
-</div>
-{% endfor %}
-
-<fieldset>
-    <legend>登録内容</legend>
-    <form action="{{ url_for("regist_music") }}" method="post">
-        <p>名前</p>
-        <input type="text" name="music" required>
-
-        <p>アーティスト</p>
-        <select name="artist" required>
-            {% for ar_list in lists[0] %}
-            <option value="{{ ar_list.id }}">
-                {{ ar_list.artist }}
-            </option>
-            {% endfor %}
-        </select>
-
-        <p>雰囲気</p>
-        {% for fe_list in lists[1] %}
-        <input type="radio" name="feeling" value="{{ fe_list.id }}">{{ fe_list.feeling }}
+<div id="main">
+    <div id="main_content">
+        {% for message in get_flashed_messages() %}
+        <div style="border: 1px solid #ccc;">
+            {{ message }}
+        </div>
         {% endfor %}
+        
+        <fieldset>
+            <legend>登録内容</legend>
+            <form action="{{ url_for("regist_music") }}" method="post">
+                <p>曲名</p>
+                <input type="text" name="music" required>
+        
+                <p>アーティスト</p>
+                <select name="artist" required>
+                    {% for ar_list in lists[0] %}
+                    <option value="{{ ar_list.id }}">
+                        {{ ar_list.artist }}
+                    </option>
+                    {% endfor %}
+                </select>
+        
+                <p>雰囲気</p>
+                {% for fe_list in lists[1] %}
+                <input type="radio" name="feeling" value="{{ fe_list.id }}">{{ fe_list.feeling }}
+                {% endfor %}
+                
+                <p>Pass</p>
+                <input type="password" name="regist_pass" required>
+
+                <br />
+                <input type="submit" value="登録">
+        
+            </form>
+        </fieldset>
+           
+        <br />
+        <fieldset>
+            <legend>新しいアーティストの登録</legend>
+            <form action="{{ url_for("regist_artist") }}" method="post">
+                <p>新しいアーティストの名前</p>
+                <input type="text" name="new_artist" required>
+                
+                <p>出身音楽の種類</p>
+                {% for co_list in lists[2] %}
+                <input type="radio" name="new_country" value="{{ co_list.id }}">{{ co_list.country }}
+                {% endfor %}
+                
+                <p>Pass</p>
+                <input type="password" name="regist_pass" required>
+                
+                <br />
+                <input type="submit" value="アーティストの登録">
+            </form>
+        </fieldset>
+    </div>
     
-        <br />
-        <input type="submit" value="登録">
-
-    </form>
-</fieldset>
-   
-<br />
-<fieldset>
-    <legend>新しいアーティストの登録</legend>
-    <form action="{{ url_for("regist_artist") }}" method="post">
-        <p>新しいアーティストの名前</p>
-        <input type="text" name="new_artist">
-        <p>出身音楽の種類</p>
-        {% for co_list in lists[2] %}
-        <input type="radio" name="new_country" value="{{ co_list.id }}">{{ co_list.country }}
-        {% endfor %}
-        <br />
-        <input type="submit" value="アーティストの登録">
-    </form>
-</fieldset>
-
+    <input type="button" id="link_to" value="Random_Music" onClick="location.href='{{ url_for("random_music") }}'">
+    <input type="button" id="link_to" value="AllMusic" onClick="location.href='{{ url_for("show_music_all") }}'">
+</div>
 {% endblock %}

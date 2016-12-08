@@ -4,10 +4,16 @@
 
 {% block content %}
 
-
-<p style="font-size : 18px;">Next Music is ...</p>
-<p style="font-size : 24px; margin-left: 20px;">
-    {{ row["music"] }} / {{ row["artist"] }}
-</p>
+<div id="main">
+    <div id="main_content">
+        <p style="font-size : 18px;">Next Music is ...</p>
+        <p style="font-size : 24px; margin-left: 20px;">
+            {{ row["music"] }} / {{ row["artist"] }}
+        </p>
+    </div>
+    <input id="random_music_button" type="button" value="Next" onClick="javascript:location.reload(true);">
+    <input id="link_to" type="button" value="Info Regist" onClick="location.href='{{ url_for("regist") }}'">
+    <input id="link_to" type="button" value="AllMusic" onClick="location.href='{{ url_for("show_music_all") }}'">
+</div>
 
 {% endblock %}

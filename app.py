@@ -1,12 +1,30 @@
 from flask import Flask, g, request, render_template, url_for, redirect, flash
 from sqlalchemy import create_engine, text
+import os
 
 
 DEBUG = True
 SECRET_KEY = "fwewppwf@@fkpw"
+PASSWORD = "pass"
 app = Flask(__name__)
 app.config.from_object(__name__)
 engine = create_engine("postgres://database@localhost/nextsing")
+
+
+# キャッシュバスター
+@app.context_processor
+def override_url_for():
+    return dict(url_for=dated_url_for)
+
+
+def dated_url_for(endpoint, **values):
+    if endpoint == "static":
+        filename = values.get("filename", None)
+        if filename:
+            file_path = os.path.join(app.root_path,
+                                     endpoint, filename)
+            values['q'] = int(os.stat(file_path).st_mtime)
+    return url_for(endpoint, **values)
 
 
 # DBリクエスト前に接続
@@ -69,6 +87,11 @@ def regist_music():
            flash("未記入の項目があります")
            return redirect(url_for("regist"))
 
+        # パスワードが間違えていた場合はリダイレクト
+        if request.form["regist_pass"] != app.config["PASSWORD"]:
+            flash("パスワードが間違えています")
+            return redirect(url_for("regist"))
+
         # 登録処理を行う
         else:
             sql = text("insert into ns_music (music, artist, feeling) \
@@ -87,11 +110,17 @@ def regist_music():
 
 @app.route("/regist/artist", methods=["GET", "POST"])
 def regist_artist():
-    if request.method == "POST":
+    if request.method != "POST":
         # 未記入がある場合はリダイレクト
         if not request.form["new_artist"] or \
-           not request.form["new_country"]:
+           not request.form["new_country"] or \
+           not request.form["regist_pass"]:
             flash("未記入の項目があります")
+            return redirect(url_for("regist"))
+
+        # パスワードが間違っていた場合はリダイレクト
+        elif request.form["regist_pass"] == app.config["PASSWORD"]:
+            flash("パスワードが間違えています")
             return redirect(url_for("regist"))
 
         # 登録処理を行う

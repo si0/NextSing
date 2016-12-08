@@ -3,11 +3,17 @@
 {% block title %}NextSing - 曲の一覧{% endblock %}
 
 {% block content %}
-
-<h1>曲の一覧</h1>
-{% for row in lists %}
-    <p>{{ row.music }} | {{ row.artist }} | {{ row.feeling }}</p>
-
-{% endfor %}
-
+<div id="main">
+    <div id="main_content">
+        <h1>曲の一覧</h1>
+        {% for row in lists %}
+            <span class="info_music">{{ row.music }}</span>
+            <span class="info_artist">{{ row.artist }}</span>
+            <div id="info_feeling">[{{ row.feeling }}]</div>
+        {% endfor %}
+    </div>
+    
+    <input id="link_to" type="button" value="Random_Music" onClick="location.href='{{ url_for("random_music") }}'">
+    <input id="link_to" type="button" value="Info Regist" onClick="location.href='{{ url_for("regist") }}'">
+</div>
 {% endblock %}
